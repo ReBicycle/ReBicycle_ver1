@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- MyBatis에서 namespace는 필수적으로 명시해야 함 -->
+ <mapper namespace="board">   
+ 	<insert id="write" parameterType="reportVO">
+ 		<selectKey keyProperty="reportNo" resultType="int" order="BEFORE">
+ 			select
+ 			report_seq.nextval from dual
+ 		</selectKey>
+ 		insert into rb_report(reportNo,reportTitle,reporterId,blackId,contents,reportDate)
+ 		values(#{reportNo},#{reportTitle},#{reporterId},#{blackId},#{contents},sysdate)
+ 	</insert>
+ 	<select id="getReportList" resultType="reportVO" parameterType="pagingBean">
+			SELECT r.reportNo,r.reportTitle,r.reportDate,r.reporterId,r.blackId,r.contents FROM(
+			SELECT row_number() over(order by reportNo desc) as rnum,reportNo,reportTitle,reporterId,blackId,contents,
+			to_char(reportDate,'YYYY.MM.DD') as reportDate 
+			FROM rb_report
+			) r where rnum between #{startRowNumber} and #{endRowNumber} order by reportNo desc
+	</select>
+	<select id="getTotalContentCount" resultType="int">
+		select count(*) from
+		rb_report
+	</select>
+	<select id="boardDetail" resultType="reportVO">
+		select
+		b.reportNo,b.reportTitle,b.reporterId,b.blackId,to_char(b.reportDate,'YYYY.MM.DD HH:mm:ss') as 
+		reportDate,b.contents from rb_report 
+		b where reportNo=${value}
+	</select>
+		<select id="boardUpdateReportView" resultType="reportVO">
+		select
+		b.reportNo,b.reportTitle,b.reporterId,b.blackId,to_char(b.reportDate,'YYYY.MM.DD HH:mm:ss') as 
+		reportDate,b.contents from rb_report 
+		b where reportNo=${value}
+	</select>
+	<update id="updateReport" parameterType="reportVO">
+		update rb_report set reportTitle=#{reportTitle},blackId=#{blackId},contents=#{contents},reportDate=sysdate where reportNo=#{reportNo}
+	</update>
+	<delete id="deleteReport">
+		delete from rb_report where reportNo=#{value}
+	</delete>
+	
+	<select id="findBoardReplyNo" resultType="boardReplyVO">
+		select
+		brdno,reno,retitle,rewriter,rememo,to_char(redate,'YYYY.MM.DD HH:mm:ss') as redate 
+		from rb_boardreply 
+		where brdno=#{value}
+	</select>
+	
+	<insert id="commentWrite" parameterType="BoardReplyVO">
+ 		<selectKey keyProperty="reno" resultType="int" order="BEFORE">
+ 			select
+ 			rb_boardreply_seq.nextval from dual
+ 		</selectKey>
+ 		insert into rb_boardreply(brdno,reno,retitle,rewriter,rememo,redate)
+ 		values(#{brdno},#{reno},#{retitle},#{rewriter},#{rememo},sysdate)
+ 	</insert>
+ 	<select id="getReplyList" resultType="BoardReplyVO">
+			select
+			c.brdno,c.reno,c.rewriter,c.rememo,to_char(c.redate,'YYYY.MM.DD HH:mm:ss') as 
+			redate from rb_boardreply 
+			c where brdno=#{value}
+	</select>
+ </mapper>
+ 
+ 
+<!--  to_char(sysdateate,'YYYY.MM.DD HH:mm:ss') where reportNo=#{reportNo} -->
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
