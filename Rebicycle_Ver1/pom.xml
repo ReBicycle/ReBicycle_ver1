@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.kosta</groupId>
 	<artifactId>Rebicycle_Ver1</artifactId>
-	<name>Rebicycle</name>
+	<name>Rebicycle_Ver1</name>
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
 	<properties>
