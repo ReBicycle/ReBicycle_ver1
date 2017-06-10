@@ -14,7 +14,9 @@ drop sequence bicycle_seq;
 drop sequence rent_seq;
 drop sequence report_seq;
 drop sequence donation_seq;
- 
+drop sequence rb_boardreply_seq;
+
+delete from rb_boardreply;
 delete from rb_review;
 delete from rb_report;
 delete from donation;
@@ -31,7 +33,7 @@ create sequence bicycle_seq nocache;
 create sequence rent_seq nocache;
 create sequence report_seq nocache;
 create sequence donation_seq nocache;
-
+create sequence rb_boardreply_seq nocache;
 select * from rb_member;
 select * from category order by categoryNo;
 select * from bicycle;
@@ -42,6 +44,7 @@ select * from rent;
 select * from donation;
 select * from rb_report;
 select * from rb_review;
+select * from rb_boardreply;
 
 --테이블 생성
 create table rb_member(
