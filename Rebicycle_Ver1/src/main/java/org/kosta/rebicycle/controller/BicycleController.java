@@ -31,7 +31,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class BicycleController {
-	  
+	     
 	@Resource
 	private BicycleServiceImpl1 serviceImpl1;
 	@Resource
